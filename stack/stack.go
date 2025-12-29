@@ -44,6 +44,9 @@ func (s *Stack[T]) Pop() (T, bool) {
 	return v, true
 }
 
+// Pop removes N elements and returns those elements from the top of the stack.
+//
+// If the stack is empty, Pop returns nil and false.
 func (s *Stack[T]) PopN(n int) ([]T, bool) {
 	size := len(s.data)
 	if size == 0 || n > size {
