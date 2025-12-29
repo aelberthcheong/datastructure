@@ -31,6 +31,41 @@ func TestStack_PushPop(t *testing.T) {
 	}
 }
 
+func TestStack_PushManyPopN(t *testing.T) {
+	s := New[int]()
+
+	if !s.IsEmpty() {
+		t.Fatalf("expected stack to be empty")
+	}
+
+	s.PushMany([]int{10, 20}...)
+
+	if size := s.Size(); size != 2 {
+		t.Fatalf("expected size 2, got %d", size)
+	}
+
+	v, ok := s.PopN(2)
+	expect := []int{10, 20}
+
+	if !ok {
+		t.Fatalf("expected PopN to return ok=true")
+	}
+
+	if len(v) != len(expect) {
+		t.Fatalf("expected %d elements, got %d", len(expect), len(v))
+	}
+
+	for i := range expect {
+		if v[i] != expect[i] {
+			t.Fatalf("expected %v, got %v", expect, v)
+		}
+	}
+
+	if _, ok := s.Pop(); ok {
+		t.Fatalf("expected pop on empty stack to return false")
+	}
+}
+
 func TestStack_Peek(t *testing.T) {
 	s := Stack[string]{}
 

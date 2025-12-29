@@ -6,6 +6,7 @@ type Stack[T any] struct {
 }
 
 // New returns an empty stack.
+// Optional, you could just do `var s stack.Stack[T]{}`.
 func New[T any]() *Stack[T] {
 	return &Stack[T]{}
 }
@@ -15,27 +16,56 @@ func (s *Stack[T]) Push(v T) {
 	s.data = append(s.data, v)
 }
 
+// Push adds many element with the rightmost element to the top of the stack.
+func (s *Stack[T]) PushMany(v ...T) {
+	s.data = append(s.data, v...)
+}
+
 // Pop removes and returns the top element of the stack.
 //
 // If the stack is empty, Pop returns the zero value of T and false.
 func (s *Stack[T]) Pop() (T, bool) {
-	n := len(s.data)
-	if n == 0 {
+	size := len(s.data)
+	if size == 0 {
 		var zero T
 		return zero, false
 	}
 
 	// Get element
-	v := s.data[n-1]
+	v := s.data[size-1]
 
-	// Prevent memory leaks for reference types
+	// Clear references
 	var zero T
-	s.data[n-1] = zero
+	s.data[size-1] = zero
 
-	// Shrink slice
-	s.data = s.data[:n-1]
+	// Shrink stack size
+	s.data = s.data[:size-1]
 
 	return v, true
+}
+
+func (s *Stack[T]) PopN(n int) ([]T, bool) {
+	size := len(s.data)
+	if size == 0 || n > size {
+		return nil, false
+	}
+
+	start := size - n
+
+	// Copy out values so rather than a view it is actually own by them
+	out := make([]T, n)
+	copy(out, s.data[start:])
+
+	// Clear references
+	var zero T
+	for i := start; i < size; i++ {
+		s.data[i] = zero
+	}
+
+	// Shrink stack size
+	s.data = s.data[:start]
+
+	return out, true
 }
 
 // Peek returns the top element without removing it.
