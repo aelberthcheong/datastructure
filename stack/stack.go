@@ -38,7 +38,7 @@ func (s *Stack[T]) Pop() (T, bool) {
 	var zero T
 	s.data[size-1] = zero
 
-	// Shrink stack size
+	// Shrink stack len
 	s.data = s.data[:size-1]
 
 	return v, true
@@ -65,7 +65,7 @@ func (s *Stack[T]) PopN(n int) ([]T, bool) {
 		s.data[i] = zero
 	}
 
-	// Shrink stack size
+	// Shrink stack len
 	s.data = s.data[:start]
 
 	return out, true
@@ -82,8 +82,8 @@ func (s *Stack[T]) Peek() (T, bool) {
 	return s.data[len(s.data)-1], true
 }
 
-// Size returns the number of elements in the stack.
-func (s *Stack[T]) Size() int {
+// Len returns the number of elements in the stack.
+func (s *Stack[T]) Lrn() int {
 	return len(s.data)
 }
 
