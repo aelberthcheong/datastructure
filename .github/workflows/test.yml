@@ -1,0 +1,21 @@
+name: Run tests
+
+on : [ push ]
+
+jobs :
+    test:
+        strategy:
+            matrix:
+                os: [ ubuntu-latest, windows-latest ]
+        runs-on: ${{ matrix.os }}
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Install go
+              uses: actions/setup-go@v5
+              with:
+                go-version-file: 'go.mod'
+                cache: true
+            
+            - name: Run tests
+              run: go test -v ./...
