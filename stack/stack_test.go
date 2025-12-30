@@ -12,7 +12,7 @@ func TestStack_PushPop(t *testing.T) {
 	s.Push(10)
 	s.Push(20)
 
-	if size := s.Size(); size != 2 {
+	if size := s.Len(); size != 2 {
 		t.Fatalf("expected size 2, got %d", size)
 	}
 
@@ -40,7 +40,7 @@ func TestStack_PushManyPopN(t *testing.T) {
 
 	s.PushMany([]int{10, 20}...)
 
-	if size := s.Size(); size != 2 {
+	if size := s.Len(); size != 2 {
 		t.Fatalf("expected size 2, got %d", size)
 	}
 
@@ -82,7 +82,7 @@ func TestStack_Peek(t *testing.T) {
 	}
 
 	// Peek must not remove the element
-	if size := s.Size(); size != 2 {
+	if size := s.Len(); size != 2 {
 		t.Fatalf("expected size 2 after peek, got %d", size)
 	}
 }
