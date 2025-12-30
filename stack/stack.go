@@ -1,4 +1,3 @@
-// The stack is not safe for concurrent use.
 package stack
 
 type Stack[T any] struct {
@@ -83,7 +82,7 @@ func (s *Stack[T]) Peek() (T, bool) {
 }
 
 // Len returns the number of elements in the stack.
-func (s *Stack[T]) Lrn() int {
+func (s *Stack[T]) Len() int {
 	return len(s.data)
 }
 
