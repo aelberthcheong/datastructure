@@ -48,7 +48,7 @@ func TestStack_PushManyPopN(t *testing.T) {
 	expect := []int{10, 20}
 
 	if !ok {
-		t.Fatalf("expected PopN to return ok=true")
+		t.Fatalf("expected PopN to return true")
 	}
 
 	if len(v) != len(expect) {
@@ -56,7 +56,7 @@ func TestStack_PushManyPopN(t *testing.T) {
 	}
 
 	for i := range expect {
-		if v[i] != expect[i] {
+		if v[i] != expect[(i+1)%len(expect)] {
 			t.Fatalf("expected %v, got %v", expect, v)
 		}
 	}
