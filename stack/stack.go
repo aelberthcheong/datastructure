@@ -43,7 +43,7 @@ func (s *Stack[T]) Pop() (T, bool) {
 	return v, true
 }
 
-// Pop removes N elements and returns those elements from the top of the stack.
+// PopN removes N elements and returns them in stack order, where out[0] is the top.
 //
 // If the stack is empty, Pop returns nil and false.
 func (s *Stack[T]) PopN(n int) ([]T, bool) {
@@ -56,7 +56,9 @@ func (s *Stack[T]) PopN(n int) ([]T, bool) {
 
 	// Copy out values so rather than a view it is actually own by them
 	out := make([]T, n)
-	copy(out, s.data[start:])
+	for i := 0; i < n; i++ {
+		out[i] = s.data[size-1-i]
+	}
 
 	// Clear references
 	var zero T
